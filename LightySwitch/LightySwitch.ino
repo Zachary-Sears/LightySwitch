@@ -40,7 +40,7 @@ void loop() {
     //TODO determine how far the motor needs to move in each direction
     motor.step(stepsToTake);
     delay(100);
-    //TODO fix motor not going couterclockwise
+    
     motor.step(-(stepsToTake * 2));
   }
 }
