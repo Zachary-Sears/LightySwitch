@@ -17,6 +17,7 @@ int isMotionDetected; // Place to store read PIR Value
 
 const int stepsPerRevolution = 2048;  // change this to fit the number of steps per revolution
 const int rolePerMinute = 5;         // Adjustable range of 28BYJ-48 stepper is 0~17 rpm
+const int stepsToTake = 2445           // Steps taken to travel 15 mm
 
 const bool isDelayDone = true;
 
@@ -25,8 +26,6 @@ Stepper motor(stepsPerRevolution, 5, 6, 9, 10);
 
 void setup() {
   motor.setSpeed(rolePerMinute);
-  // initialize the serial port:
-  Serial.begin(9600);
   
   pinMode(ledPin, OUTPUT);
   pinMode(motionPin, INPUT);
@@ -39,9 +38,9 @@ void loop() {
   digitalWrite(LED_BUILTIN, isMotionDetected);
   if(isMotionDetected && isDelayDone){
     //TODO determine how far the motor needs to move in each direction
-    motor.step(100);
+    motor.step(stepsToTake);
     delay(100);
     //TODO fix motor not going couterclockwise
-    motor.step(-100);
+    motor.step(-(stepsToTake * 2));
   }
 }
