@@ -21,7 +21,7 @@ const int rolePerMinute = 5;         // Adjustable range of 28BYJ-48 stepper is 
 const bool isDelayDone = true;
 
 // initialize the stepper library on pins
-Stepper motor(stepsPerRevolution, 5, 6, 9, 10);
+Stepper motor(stepsPerRevolution, 10, 6, 9, 5);
 
 void setup() {
   motor.setSpeed(rolePerMinute);
@@ -41,7 +41,6 @@ void loop() {
     //TODO determine how far the motor needs to move in each direction
     motor.step(100);
     delay(100);
-    //TODO fix motor not going couterclockwise
     motor.step(-100);
   }
 }
