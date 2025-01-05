@@ -12,13 +12,13 @@
 #include <Stepper.h>
 
 int ledPin = 13;  // LED on Pin 13 of Arduino
-int pirPin = DD3; // Input for HC-S501 corresponds to pin D3 on Nano
-int pirValue; // Place to store read PIR Value
+int motionPin = DD3; // Input for HC-S501 corresponds to pin D3 on Nano
+int isMotionDetected; // Place to store read PIR Value
 
 const int stepsPerRevolution = 2048;  // change this to fit the number of steps per revolution
 const int rolePerMinute = 5;         // Adjustable range of 28BYJ-48 stepper is 0~17 rpm
 
-const bool postDelay = true;
+const bool isDelayDone = true;
 
 // initialize the stepper library on pins
 Stepper motor(stepsPerRevolution, 5, 6, 9, 10);
@@ -29,20 +29,19 @@ void setup() {
   Serial.begin(9600);
   
   pinMode(ledPin, OUTPUT);
-  pinMode(pirPin, INPUT);
+  pinMode(motionPin, INPUT);
  
   digitalWrite(ledPin, LOW);
 }
 
 void loop() {  
-  pirValue = digitalRead(pirPin);
-  digitalWrite(LED_BUILTIN, pirValue);
-  //TODO use a real time clock to 
-  if(pirValue && postDelay){
+  isMotionDetected = digitalRead(motionPin);
+  digitalWrite(LED_BUILTIN, isMotionDetected);
+  if(isMotionDetected && isDelayDone){
     //TODO determine how far the motor needs to move in each direction
-    motor.step(50);
+    motor.step(100);
     delay(100);
-    //TODO fix motor not going in reverse
-    motor.step(-50);
+    //TODO fix motor not going couterclockwise
+    motor.step(-100);
   }
 }
